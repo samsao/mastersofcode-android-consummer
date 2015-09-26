@@ -1,10 +1,9 @@
-package com.samsao.projecttemplate;
+package com.oyeoye.consumer;
 
 import javax.inject.Scope;
 
 /**
- * @author jfcartier
- * @since 15-08-06
+ * @author Lukasz Piliszczuk - lukasz.pili@gmail.com
  */
 @Scope
 public @interface DaggerScope {

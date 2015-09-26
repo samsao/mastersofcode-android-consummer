@@ -1,17 +1,16 @@
-package com.samsao.projecttemplate.presentation.base;
+package com.oyeoye.consumer.presentation.base;
 
 import android.animation.AnimatorSet;
 import android.content.Context;
 import android.util.AttributeSet;
 
-import com.samsao.projecttemplate.presentation.AbstractPresenter;
+import com.oyeoye.consumer.presentation.AbstractPresenter;
 
 import architect.view.HandlesBack;
 import architect.view.HandlesViewTransition;
 
 /**
- * @author jfcartier
- * @since 15-08-06
+ * @author Lukasz Piliszczuk - lukasz.pili@gmail.com
  */
 public abstract class PresentedFrameLayout<T extends AbstractPresenter> extends architect.commons.view.PresentedFrameLayout<T> implements HandlesBack, HandlesViewTransition {
     public PresentedFrameLayout(Context context) {

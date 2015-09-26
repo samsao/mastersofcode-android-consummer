@@ -1,4 +1,4 @@
-package com.samsao.projecttemplate;
+package com.oyeoye.consumer;
 
 import android.content.Context;
 import android.content.Intent;
@@ -9,8 +9,12 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.samsao.projecttemplate.presentation.RootActivityPresenter;
-import com.samsao.projecttemplate.presentation.main.stackable.MainStackable;
+import com.samsao.projecttemplate.DaggerRootActivityComponent;
+import com.samsao.projecttemplate.MainApplicationComponent;
+import com.samsao.projecttemplate.R;
+import com.samsao.projecttemplate.RootActivityComponent;
+import com.oyeoye.consumer.presentation.RootActivityPresenter;
+import com.oyeoye.consumer.presentation.main.stackable.MainStackable;
 
 import javax.inject.Inject;
 
@@ -29,8 +33,11 @@ import butterknife.ButterKnife;
 import mortar.MortarScope;
 import mortar.bundler.BundleServiceRunner;
 
+/**
+ * @author Lukasz Piliszczuk - lukasz.pili@gmail.com
+ */
 @AutoComponent(
-        dependencies = MainApplication.class,
+        dependencies = App.class,
         superinterfaces = AppDependencies.class
 )
 @AutoInjector
@@ -83,7 +90,6 @@ public class RootActivity extends AppCompatActivity implements RootActivityPrese
         DaggerService.<RootActivityComponent>get(this).inject(this);
         mMainActivityPresenter.takeView(this);
 
-        // it is usually the best to create the mNavigator after everything else
         mNavigator = ActivityArchitector.onCreateNavigator(this, savedInstanceState, mNavigatorView, new MainStackable());
     }
 

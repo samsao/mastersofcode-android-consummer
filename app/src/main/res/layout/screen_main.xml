@@ -7,7 +7,12 @@
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/screen_main_toolbar"
-        android:background="@android:color/holo_orange_light"
-        style="@style/ToolbarStyle"/>
+        style="@style/ToolbarStyle"
+        android:background="@android:color/holo_orange_light"/>
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/pager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
 
 </LinearLayout>

@@ -1,4 +1,4 @@
-package com.samsao.projecttemplate.presentation;
+package com.oyeoye.consumer.presentation;
 
 import android.content.Context;
 import android.support.v7.app.ActionBar;
@@ -7,8 +7,8 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 
-import com.samsao.projecttemplate.DaggerScope;
-import com.samsao.projecttemplate.RootActivity;
+import com.oyeoye.consumer.DaggerScope;
+import com.oyeoye.consumer.RootActivity;
 
 import javax.inject.Inject;
 
@@ -17,8 +17,7 @@ import mortar.Presenter;
 import mortar.bundler.BundleService;
 
 /**
- * @author jliang
- * @since 2015-08-07
+ * @author Lukasz Piliszczuk - lukasz.pili@gmail.com
  */
 @AutoExpose(RootActivity.class)
 @DaggerScope(RootActivity.class)

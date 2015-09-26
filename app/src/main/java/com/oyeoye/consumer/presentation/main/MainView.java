@@ -1,4 +1,4 @@
-package com.samsao.projecttemplate.presentation.main;
+package com.oyeoye.consumer.presentation.main;
 
 import android.content.Context;
 import android.support.v7.widget.LinearLayoutCompat;
@@ -7,8 +7,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.samsao.projecttemplate.R;
-import com.samsao.projecttemplate.presentation.base.PresentedFrameLayout;
-import com.samsao.projecttemplate.presentation.main.stackable.MainStackableComponent;
+import com.oyeoye.consumer.presentation.base.PresentedFrameLayout;
+import com.oyeoye.consumer.presentation.main.stackable.MainStackableComponent;
 
 import architect.robot.DaggerService;
 import autodagger.AutoInjector;
@@ -16,8 +16,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 
 /**
- * @author jliang
- * @since 2015-08-04
+ * @author Lukasz Piliszczuk - lukasz.pili@gmail.com
  */
 @AutoInjector(MainPresenter.class)
 public class MainView extends PresentedFrameLayout<MainPresenter> {
@@ -32,6 +31,8 @@ public class MainView extends PresentedFrameLayout<MainPresenter> {
         View view = View.inflate(context, R.layout.screen_main, this);
         ButterKnife.bind(view);
         setLayoutParams(new LinearLayoutCompat.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+
+
     }
 
     @Override

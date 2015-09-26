@@ -1,4 +1,4 @@
-package com.samsao.projecttemplate.presentation;
+package com.oyeoye.consumer.presentation;
 
 import android.content.Context;
 import android.content.res.Resources;
@@ -15,8 +15,7 @@ import architect.Navigator;
 import mortar.ViewPresenter;
 
 /**
- * @author jfcartier
- * @since 15-06-24
+ * @author Lukasz Piliszczuk - lukasz.pili@gmail.com
  */
 public abstract class AbstractPresenter<V extends View> extends ViewPresenter<V> {
 

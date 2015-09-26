@@ -1,26 +1,27 @@
-package com.samsao.projecttemplate;
+package com.oyeoye.consumer;
 
 import android.app.Application;
 
 import com.crashlytics.android.Crashlytics;
-import com.samsao.projecttemplate.business.managers.PreferenceManager;
+import com.samsao.projecttemplate.BuildConfig;
+import com.samsao.projecttemplate.DaggerMainApplicationComponent;
+import com.samsao.projecttemplate.MainApplicationComponent;
 
 import architect.robot.DaggerService;
 import autodagger.AutoComponent;
-import dagger.Provides;
 import io.fabric.sdk.android.Fabric;
 import mortar.MortarScope;
 import timber.log.Timber;
 
 /**
- * Created by lcampos on 2015-09-07.
+ * @author Lukasz Piliszczuk - lukasz.pili@gmail.com
  */
 @AutoComponent(
-        modules = MainApplication.Module.class,
+        modules = App.Module.class,
         superinterfaces = AppDependencies.class
 )
-@DaggerScope(MainApplication.class)
-public class MainApplication extends Application {
+@DaggerScope(App.class)
+public class App extends Application {
     private MortarScope mScope;
     public static String SCOPE_NAME = "root";
 
@@ -49,15 +50,6 @@ public class MainApplication extends Application {
     @dagger.Module
     public class Module {
 
-        /**
-         * provide the preference manager to the whole app
-         *
-         * @return PreferenceManager
-         */
-        @Provides
-        @DaggerScope(MainApplication.class)
-        public PreferenceManager providesPreferenceManager() {
-            return new PreferenceManager(getApplicationContext());
-        }
+
     }
 }
