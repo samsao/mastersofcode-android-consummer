@@ -1,14 +1,15 @@
 package com.oyeoye.consumer;
 
 import android.app.Application;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 
 import com.crashlytics.android.Crashlytics;
-import com.samsao.projecttemplate.BuildConfig;
-import com.samsao.projecttemplate.DaggerMainApplicationComponent;
-import com.samsao.projecttemplate.MainApplicationComponent;
+import com.oyeoye.consumer.manager.SessionManager;
 
 import architect.robot.DaggerService;
 import autodagger.AutoComponent;
+import dagger.Provides;
 import io.fabric.sdk.android.Fabric;
 import mortar.MortarScope;
 import timber.log.Timber;
@@ -22,12 +23,11 @@ import timber.log.Timber;
 )
 @DaggerScope(App.class)
 public class App extends Application {
-    private MortarScope mScope;
-    public static String SCOPE_NAME = "root";
+    private MortarScope scope;
 
     @Override
     public Object getSystemService(String name) {
-        return (mScope != null && mScope.hasService(name)) ? mScope.getService(name) : super.getSystemService(name);
+        return (scope != null && scope.hasService(name)) ? scope.getService(name) : super.getSystemService(name);
     }
 
     @Override
@@ -40,16 +40,26 @@ public class App extends Application {
             Fabric.with(this, new Crashlytics());
         }
 
-        MainApplicationComponent component = DaggerMainApplicationComponent.builder().module(new Module()).build();
+        AppComponent component = DaggerAppComponent.builder().module(new Module()).build();
 
-        mScope = MortarScope.buildRootScope()
+        scope = MortarScope.buildRootScope()
                 .withService(DaggerService.SERVICE_NAME, component)
-                .build(SCOPE_NAME);
+                .build("root");
     }
 
     @dagger.Module
     public class Module {
 
+        @Provides
+        @DaggerScope(App.class)
+        public SharedPreferences provideSharedPreferences() {
+            return PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        }
 
+        @Provides
+        @DaggerScope(App.class)
+        public SessionManager provideSessionManager(SharedPreferences sharedPreferences) {
+            return new SessionManager(sharedPreferences);
+        }
     }
 }

@@ -9,12 +9,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.samsao.projecttemplate.DaggerRootActivityComponent;
-import com.samsao.projecttemplate.MainApplicationComponent;
-import com.samsao.projecttemplate.R;
-import com.samsao.projecttemplate.RootActivityComponent;
 import com.oyeoye.consumer.presentation.RootActivityPresenter;
-import com.oyeoye.consumer.presentation.main.stackable.MainStackable;
+import com.oyeoye.consumer.presentation.login.stackable.LoginStackable;
 
 import javax.inject.Inject;
 
@@ -44,19 +40,19 @@ import mortar.bundler.BundleServiceRunner;
 @DaggerScope(RootActivity.class)
 public class RootActivity extends AppCompatActivity implements RootActivityPresenter.Activity {
 
-    private MortarScope mScope;
-    private Navigator mNavigator;
+    private MortarScope scope;
+    private Navigator navigator;
 
     @Inject
-    protected RootActivityPresenter mMainActivityPresenter;
+    protected RootActivityPresenter activityPresenter;
 
     @Bind(R.id.navigator_container)
-    protected NavigatorView mNavigatorView;
+    protected NavigatorView navigatorView;
 
     @Override
     public Object getSystemService(String name) {
-        if (mScope != null && mScope.hasService(name)) {
-            return mScope.getService(name);
+        if (scope != null && scope.hasService(name)) {
+            return scope.getService(name);
         }
         return super.getSystemService(name);
     }
@@ -67,7 +63,7 @@ public class RootActivity extends AppCompatActivity implements RootActivityPrese
         setContentView(R.layout.activity_root);
         ButterKnife.bind(this);
 
-        mScope = ActivityArchitector.onCreateScope(this, savedInstanceState, new Architected() {
+        scope = ActivityArchitector.onCreateScope(this, savedInstanceState, new Architected() {
             @Override
             public Navigator createNavigator(MortarScope scope) {
                 Navigator navigator = Navigator.create(scope, null, new Navigator.Config().dontRestoreStackAfterKill(true));
@@ -81,60 +77,60 @@ public class RootActivity extends AppCompatActivity implements RootActivityPrese
             @Override
             public void configureScope(MortarScope.Builder builder, MortarScope parentScope) {
                 RootActivityComponent component = DaggerRootActivityComponent.builder()
-                        .mainApplicationComponent(parentScope.<MainApplicationComponent>getService(DaggerService.SERVICE_NAME))
+                        .appComponent(parentScope.<AppComponent>getService(DaggerService.SERVICE_NAME))
                         .build();
                 builder.withService(DaggerService.SERVICE_NAME, component);
             }
         });
 
         DaggerService.<RootActivityComponent>get(this).inject(this);
-        mMainActivityPresenter.takeView(this);
+        activityPresenter.takeView(this);
 
-        mNavigator = ActivityArchitector.onCreateNavigator(this, savedInstanceState, mNavigatorView, new MainStackable());
+        navigator = ActivityArchitector.onCreateNavigator(this, savedInstanceState, navigatorView, new LoginStackable());
     }
 
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
-        mNavigator.delegate().onNewIntent(intent);
+        navigator.delegate().onNewIntent(intent);
     }
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        BundleServiceRunner.getBundleServiceRunner(mScope).onSaveInstanceState(outState);
-        mNavigator.delegate().onSaveInstanceState(outState);
+        BundleServiceRunner.getBundleServiceRunner(scope).onSaveInstanceState(outState);
+        navigator.delegate().onSaveInstanceState(outState);
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-        mNavigator.delegate().onStart();
+        navigator.delegate().onStart();
     }
 
     @Override
     protected void onStop() {
-        mNavigator.delegate().onStop();
+        navigator.delegate().onStop();
         super.onStop();
     }
 
     @Override
     protected void onDestroy() {
-        mMainActivityPresenter.dropView(this);
+        activityPresenter.dropView(this);
 
-        mNavigator.delegate().onDestroy();
-        mNavigator = null;
+        navigator.delegate().onDestroy();
+        navigator = null;
 
-        if (isFinishing() && mScope != null) {
-            mScope.destroy();
-            mScope = null;
+        if (isFinishing() && scope != null) {
+            scope.destroy();
+            scope = null;
         }
         super.onDestroy();
     }
 
     @Override
     public void onBackPressed() {
-        if (mNavigator.delegate().onBackPressed()) {
+        if (navigator.delegate().onBackPressed()) {
             return;
         }
         super.onBackPressed();
@@ -142,38 +138,22 @@ public class RootActivity extends AppCompatActivity implements RootActivityPrese
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        mMainActivityPresenter.onCreateOptionsMenu(getMenuInflater(), menu);
-        return true;
+        return activityPresenter.onCreateOptionsMenu(getMenuInflater(), menu);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        return mMainActivityPresenter.onOptionsItemSelected(item);
+        return activityPresenter.onOptionsItemSelected(item);
     }
 
-    /**
-     * Set the toolbar
-     *
-     * @param toolbar
-     */
     public void setToolbar(Toolbar toolbar) {
         setSupportActionBar(toolbar);
     }
 
-    /**
-     * Set the toolbar title
-     *
-     * @param resId
-     */
     public void setToolbarTitle(@StringRes int resId) {
         setToolbarTitle(getString(resId));
     }
 
-    /**
-     * Set the toolbar title
-     *
-     * @param title
-     */
     public void setToolbarTitle(String title) {
         if (title.isEmpty()) {
             getSupportActionBar().setDisplayShowTitleEnabled(false);

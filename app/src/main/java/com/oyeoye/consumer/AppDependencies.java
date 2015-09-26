@@ -1,13 +1,11 @@
 package com.oyeoye.consumer;
 
-import autodagger.AutoComponent;
+import com.oyeoye.consumer.manager.SessionManager;
 
 /**
  * @author Lukasz Piliszczuk - lukasz.pili@gmail.com
  */
-@AutoComponent(
-        modules = App.Module.class
-)
 public interface AppDependencies {
 
+    SessionManager sessionManager();
 }

@@ -1,4 +1,4 @@
-package com.oyeoye.consumer.presentation.main;
+package com.oyeoye.consumer.presentation.login;
 
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
@@ -7,12 +7,11 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 
 import com.oyeoye.consumer.DaggerScope;
+import com.oyeoye.consumer.manager.SessionManager;
 import com.oyeoye.consumer.presentation.AbstractPresenter;
 import com.oyeoye.consumer.presentation.ActivityContainerComponent;
 import com.oyeoye.consumer.presentation.RootActivityPresenter;
 import com.oyeoye.consumer.presentation.SetupToolbarHandler;
-import com.oyeoye.consumer.presentation.main.deals.stackable.DealsStackable;
-import com.oyeoye.consumer.presentation.main.pickups.stackable.PickupsStackable;
 
 import architect.robot.AutoStackable;
 import autodagger.AutoComponent;
@@ -23,24 +22,23 @@ import autodagger.AutoExpose;
  */
 @AutoStackable(
         component = @AutoComponent(includes = ActivityContainerComponent.class),
-        pathWithView = MainView.class
+        pathWithView = LoginView.class
 )
-@DaggerScope(MainPresenter.class)
-@AutoExpose(MainPresenter.class)
-public class MainPresenter extends AbstractPresenter<MainView> implements SetupToolbarHandler {
+@DaggerScope(LoginPresenter.class)
+@AutoExpose(LoginPresenter.class)
+public class LoginPresenter extends AbstractPresenter<LoginView> implements SetupToolbarHandler {
 
     private final RootActivityPresenter activityPresenter;
+    private final SessionManager sessionManager;
 
-    private final DealsStackable dealsStackable = new DealsStackable();
-    private final PickupsStackable pickupsStackable = new PickupsStackable();
-
-    public MainPresenter(RootActivityPresenter mainActivityPresenter) {
-        activityPresenter = mainActivityPresenter;
+    public LoginPresenter(RootActivityPresenter activityPresenter, SessionManager sessionManager) {
+        this.activityPresenter = activityPresenter;
+        this.sessionManager = sessionManager;
     }
 
     @Override
     protected void onLoad(Bundle savedInstanceState) {
-        getView().show(dealsStackable, pickupsStackable);
+
     }
 
     @Override

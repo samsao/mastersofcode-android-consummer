@@ -23,7 +23,7 @@ import mortar.bundler.BundleService;
 @DaggerScope(RootActivity.class)
 public class RootActivityPresenter extends Presenter<RootActivityPresenter.Activity> {
 
-    private SetupToolbarHandler mSetupToolbarHandler;
+    private SetupToolbarHandler toolbarHandler;
 
     @Inject
     public RootActivityPresenter() {
@@ -57,22 +57,24 @@ public class RootActivityPresenter extends Presenter<RootActivityPresenter.Activ
     }
 
     public void resetMenu(SetupToolbarHandler setupToolbarPresenter) {
-        mSetupToolbarHandler = setupToolbarPresenter;
+        toolbarHandler = setupToolbarPresenter;
         ((RootActivity) getView()).invalidateOptionsMenu();
     }
 
-    public void onCreateOptionsMenu(MenuInflater menuInflater, Menu menu) {
+    public boolean onCreateOptionsMenu(MenuInflater menuInflater, Menu menu) {
         ActionBar actionBar = ((RootActivity) getView()).getSupportActionBar();
-        if (actionBar != null && mSetupToolbarHandler != null) {
-            mSetupToolbarHandler.setupToolbarMenu(actionBar, menuInflater, menu);
+        if (actionBar != null && toolbarHandler != null) {
+            toolbarHandler.setupToolbarMenu(actionBar, menuInflater, menu);
+            return true;
         }
+        return false;
     }
 
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             default:
-                if (mSetupToolbarHandler != null) {
-                    return mSetupToolbarHandler.onOptionsItemSelected(item);
+                if (toolbarHandler != null) {
+                    return toolbarHandler.onOptionsItemSelected(item);
                 } else {
                     return false;
                 }
