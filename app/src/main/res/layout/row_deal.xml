@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView
+    android:id="@+id/row_deal"
+    style="@style/AppCardView"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    >
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@android:color/white"
+        android:orientation="vertical">
+
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <com.oyeoye.consumer.presentation.util.AspectRatioImageView
+                android:id="@+id/row_deal_image"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:contentDescription="@null"
+                android:scaleType="centerCrop"
+                app:ratio="2"/>
+
+            <TextView
+                android:id="@+id/row_deal_discount_percentage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="top|end"
+                android:layout_marginRight="@dimen/spacing"
+                android:layout_marginTop="@dimen/spacing"
+                android:singleLine="true"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/font_size_large"/>
+
+            <TextView
+                android:id="@+id/row_deal_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|start"
+                android:layout_marginBottom="@dimen/spacing"
+                android:layout_marginLeft="@dimen/spacing"
+                android:ellipsize="end"
+                android:singleLine="true"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/font_size_very_large"/>
+
+        </FrameLayout>
+
+        <!--Description-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:background="@android:color/white"
+            android:paddingLeft="@dimen/spacing"
+            android:paddingRight="@dimen/spacing"
+            android:paddingTop="@dimen/spacing">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingRight="@dimen/spacing"
+                android:src="@drawable/ic_assignment_24dp"/>
+
+            <TextView
+                android:id="@+id/row_deal_description"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/light_gray"
+                android:textSize="@dimen/font_size_medium"/>
+
+        </LinearLayout>
+
+        <!--Price-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:background="@android:color/white"
+            android:paddingLeft="@dimen/spacing"
+            android:paddingRight="@dimen/spacing"
+            android:paddingTop="@dimen/spacing">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingRight="@dimen/spacing"
+                android:src="@drawable/ic_attach_money_24dp"/>
+
+            <TextView
+                android:id="@+id/row_deal_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="numberDecimal"
+                android:textColor="@color/light_gray"
+                android:textSize="@dimen/font_size_medium"/>
+
+        </LinearLayout>
+
+        <!--Quantity-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:background="@android:color/white"
+            android:orientation="horizontal"
+            android:padding="@dimen/spacing">
+
+            <ImageView
+                android:id="@+id/row_deal_quantity_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingRight="@dimen/spacing"/>
+
+            <TextView
+                android:id="@+id/row_deal_quantity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="number"
+                android:textColor="@color/light_gray"
+                android:textSize="@dimen/font_size_medium"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@android:color/white"
+            android:orientation="horizontal"
+            android:padding="@dimen/spacing">
+
+            <Button
+                android:id="@+id/row_deal_masterpass"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/sel_btn_dialog"
+                android:paddingLeft="6dp"
+                android:paddingRight="6dp"
+                android:text="1-click MASTERPASS"
+                android:textColor="@color/light_yellow"/>
+
+            <Button
+                android:id="@+id/row_deal_buy"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/spacing"
+                android:background="@drawable/sel_btn_dialog"
+                android:paddingLeft="6dp"
+                android:paddingRight="6dp"
+                android:text="BUY"
+                android:textColor="@color/light_yellow"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</android.support.v7.widget.CardView>

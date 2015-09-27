@@ -105,3 +105,5 @@
 
 # ShareActionProvider
 -keep class android.support.v7.widget.ShareActionProvider { *; }
+
+-include proguard-com.digits.sdk.android.digits.txt
