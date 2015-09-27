@@ -14,10 +14,12 @@ import com.oyeoye.consumer.presentation.ActivityContainerComponent;
 import com.oyeoye.consumer.presentation.RootActivityPresenter;
 import com.oyeoye.consumer.rest.RestClient;
 
+import architect.Navigator;
 import architect.robot.AutoStackable;
 import architect.robot.FromPath;
 import autodagger.AutoComponent;
 import autodagger.AutoExpose;
+import timber.log.Timber;
 
 /**
  * @author Lukasz Piliszczuk - lukasz.pili@gmail.com
@@ -47,10 +49,18 @@ public class ValidationPresenter extends AbstractPresenter<ValidationView> {
     protected void onLoad(Bundle savedInstanceState) {
         NfcAdapter nfcAdapter = NfcAdapter.getDefaultAdapter(getView().getContext());
         if (nfcAdapter != null) {
+            nfcAdapter.setOnNdefPushCompleteCallback(new NfcAdapter.OnNdefPushCompleteCallback() {
+                @Override
+                public void onNdefPushComplete(NfcEvent nfcEvent) {
+                    Timber.d("Message sent !");
+                    Navigator.get(getContext()).back(true);
+                }
+            }, activityPresenter.getActivity());
+
             nfcAdapter.setNdefPushMessageCallback(new NfcAdapter.CreateNdefMessageCallback() {
                 @Override
                 public NdefMessage createNdefMessage(NfcEvent nfcEvent) {
-                    return new NdefMessage(NdefRecord.createTextRecord("en", "test"));
+                    return new NdefMessage(NdefRecord.createTextRecord("en", transaction.getId() + ":" + transaction.getKey()));
                 }
             }, activityPresenter.getActivity());
         }
