@@ -12,7 +12,7 @@ import retrofit.http.POST;
  */
 public interface UserService {
 
-    @POST("/connect/reg")
+    @POST("/client/connect/reg")
     @FormUrlEncoded
     void connect(@Field("phone") String phone, @Field("gcmId") String gcmId, Callback<User> callback);
 }

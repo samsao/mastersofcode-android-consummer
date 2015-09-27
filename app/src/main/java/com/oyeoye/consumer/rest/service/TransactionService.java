@@ -15,10 +15,10 @@ import retrofit.http.POST;
  */
 public interface TransactionService {
 
-    @GET("/transaction")
+    @GET("/client/transaction")
     void load(Callback<List<Transaction>> callback);
 
-    @POST("/transaction/add")
+    @POST("/client/transaction/add")
     @FormUrlEncoded
     void add(@Field("deal") String dealId, @Field("token") String cardToken, @Field("quantity") int quantity, Callback<Transaction> callback);
 }

@@ -156,4 +156,5 @@ dependencies {
     compile 'com.google.android.gms:play-services-gcm:8.1.0'
 
     compile 'org.apache.commons:commons-lang3:3.3.2'
+    compile 'com.android.support:cardview-v7:' + android_support_library_version
 }
