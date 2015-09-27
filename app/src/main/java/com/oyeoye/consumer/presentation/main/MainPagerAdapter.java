@@ -16,6 +16,6 @@ public class MainPagerAdapter extends StackablePagerAdapter {
 
     @Override
     public CharSequence getPageTitle(int position) {
-        return position == 0 ? "DEALS" : "PICKUPS";
+        return position == 0 ? "OFFERS" : "PICKUPS";
     }
 }

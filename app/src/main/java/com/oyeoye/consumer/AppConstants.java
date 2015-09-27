@@ -5,8 +5,7 @@ package com.oyeoye.consumer;
  */
 public class AppConstants {
 
-
-    public static final String API_URL = "http://172.20.34.154:3000";
+    public static final String API_URL = "http://niesh.tk:3000";
 
     public static final String TWITTER_KEY = "FgHDjfsV6nAWKrY4a16kE3Ddx";
     public static final String TWITTER_SECRET = "GHYydknprEIAb5hygRzgPcptOChY7mqC8EzDOhzwikxjDFv3Ab";

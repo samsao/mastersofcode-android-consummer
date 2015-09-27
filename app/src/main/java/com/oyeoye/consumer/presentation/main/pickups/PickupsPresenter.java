@@ -21,6 +21,8 @@ public class PickupsPresenter extends AbstractPresenter<PickupsView> {
 
     private final RestClient restClient;
 
+    private List<Transaction> transactions;
+
     public PickupsPresenter(RestClient restClient) {
         this.restClient = restClient;
     }
@@ -31,17 +33,23 @@ public class PickupsPresenter extends AbstractPresenter<PickupsView> {
     }
 
     public void load() {
-        getView().showLoading();
+        if (transactions == null || transactions.isEmpty()) {
+            getView().showLoading();
+        }
+
         restClient.getTransactionService().load(new Callback<List<Transaction>>() {
             @Override
             public void success(List<Transaction> transactions, Response response) {
                 if (!hasView()) return;
+                PickupsPresenter.this.transactions = transactions;
                 getView().show(transactions);
             }
 
             @Override
             public void failure(RetrofitError error) {
                 if (!hasView()) return;
+                PickupsPresenter.this.transactions = null;
+                getView().showError();
             }
         });
     }

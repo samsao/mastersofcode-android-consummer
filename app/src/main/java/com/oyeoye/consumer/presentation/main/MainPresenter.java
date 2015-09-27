@@ -36,6 +36,8 @@ public class MainPresenter extends AbstractPresenter<MainView> implements SetupT
     private final DealsStackable dealsStackable = new DealsStackable();
     private final PickupsStackable pickupsStackable = new PickupsStackable();
 
+    private boolean reloadPickups;
+
     public MainPresenter(RootActivityPresenter mainActivityPresenter) {
         activityPresenter = mainActivityPresenter;
     }
@@ -43,6 +45,7 @@ public class MainPresenter extends AbstractPresenter<MainView> implements SetupT
     @Override
     protected void onLoad(Bundle savedInstanceState) {
         getView().show(dealsStackable, pickupsStackable);
+        reloadPickupsIfNeeded();
     }
 
     @Override
@@ -65,8 +68,18 @@ public class MainPresenter extends AbstractPresenter<MainView> implements SetupT
 
     @Override
     public void onReceivedResult(Boolean result) {
+        reloadPickups = true;
+        reloadPickupsIfNeeded();
+    }
+
+    private void reloadPickupsIfNeeded() {
+        if (!hasView() || !reloadPickups) return;
+        reloadPickups = false;
+
         getView().tabLayout.getTabAt(1).select();
         PickupsView pickupsView = (PickupsView) getView().findViewWithTag("pickups_tag");
-        pickupsView.reload();
+        if (pickupsView != null) {
+            pickupsView.reload();
+        }
     }
 }
