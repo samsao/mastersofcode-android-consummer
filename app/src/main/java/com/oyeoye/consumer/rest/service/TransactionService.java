@@ -20,5 +20,5 @@ public interface TransactionService {
 
     @POST("/transaction/add")
     @FormUrlEncoded
-    void add(@Field("dealId") String dealId, @Field("token") String cardToken, @Field("quantity") int quantity, Callback<Transaction> callback);
+    void add(@Field("deal") String dealId, @Field("token") String cardToken, @Field("quantity") int quantity, Callback<Transaction> callback);
 }

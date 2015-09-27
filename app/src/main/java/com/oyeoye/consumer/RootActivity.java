@@ -13,6 +13,7 @@ import com.oyeoye.consumer.manager.SessionManager;
 import com.oyeoye.consumer.presentation.RootActivityPresenter;
 import com.oyeoye.consumer.presentation.login.stackable.LoginStackable;
 import com.oyeoye.consumer.presentation.main.stackable.MainStackable;
+import com.oyeoye.consumer.presentation.masterpass.MasterpassView;
 import com.oyeoye.consumer.presentation.payment.PaymentView;
 
 import javax.inject.Inject;
@@ -78,6 +79,7 @@ public class RootActivity extends AppCompatActivity implements RootActivityPrese
                 navigator.transitions().register(new TransitionsMapping()
                                 .byDefault(new LateralViewTransition(new Config().duration(300)))
                                 .show(PaymentView.class).withTransition(new FadeModalTransition())
+                                .show(MasterpassView.class).withTransition(new FadeModalTransition())
                 );
                 return navigator;
             }

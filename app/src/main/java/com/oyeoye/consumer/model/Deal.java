@@ -13,12 +13,10 @@ public class Deal implements Serializable {
     @SerializedName("_id")
     private String id;
 
-    @SerializedName("merchant")
-    private String merchantId;
-
     private String title;
     private String description;
     private String image;
+    private Merchant merchant;
     private double price;
     private double originalPrice;
     private int quantity;
@@ -26,28 +24,20 @@ public class Deal implements Serializable {
     @SerializedName("transactions")
     private List<String> transactionsIds;
 
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getMerchantId() {
-        return merchantId;
-    }
-
-    public void setMerchantId(String merchantId) {
-        this.merchantId = merchantId;
-    }
-
     public String getTitle() {
         return title;
     }
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getDescription() {
@@ -64,6 +54,14 @@ public class Deal implements Serializable {
 
     public void setImage(String image) {
         this.image = image;
+    }
+
+    public Merchant getMerchant() {
+        return merchant;
+    }
+
+    public void setMerchant(Merchant merchant) {
+        this.merchant = merchant;
     }
 
     public double getPrice() {

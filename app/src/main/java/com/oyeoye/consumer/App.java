@@ -42,6 +42,8 @@ public class App extends Application {
 
         AppComponent component = DaggerAppComponent.builder().module(new Module()).build();
 
+        Simplify.init(AppConstants.SIMPLIFY_PUBLIC);
+
         TwitterAuthConfig authConfig = new TwitterAuthConfig(AppConstants.TWITTER_KEY, AppConstants.TWITTER_SECRET);
 
         if (BuildConfig.DEBUG) {

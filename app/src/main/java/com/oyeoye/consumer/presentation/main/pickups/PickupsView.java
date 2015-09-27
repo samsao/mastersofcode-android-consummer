@@ -36,7 +36,7 @@ public class PickupsView extends PresentedFrameLayout<PickupsPresenter> {
         View view = View.inflate(context, R.layout.screen_pickups, this);
         ButterKnife.bind(view);
 
-        setTag("pickups_tab");
+        setTag("pickups_tag");
     }
 
     public void show(List<Transaction> transactions) {

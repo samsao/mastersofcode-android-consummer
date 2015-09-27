@@ -5,6 +5,7 @@ import android.os.Bundle;
 import com.oyeoye.consumer.model.Deal;
 import com.oyeoye.consumer.presentation.AbstractPresenter;
 import com.oyeoye.consumer.presentation.RootActivityPresenter;
+import com.oyeoye.consumer.presentation.masterpass.stackable.MasterpassStackable;
 import com.oyeoye.consumer.presentation.payment.stackable.PaymentStackable;
 import com.oyeoye.consumer.rest.RestClient;
 
@@ -14,6 +15,7 @@ import architect.Navigator;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
+import timber.log.Timber;
 
 /**
  * @author Lukasz Piliszczuk - lukasz.pili@gmail.com
@@ -40,6 +42,7 @@ public class DealsPresenter extends AbstractPresenter<DealsView> {
             @Override
             public void failure(RetrofitError error) {
                 if (!hasView()) return;
+                Timber.d("Error: %s", error.getMessage());
             }
         });
     }
@@ -48,7 +51,7 @@ public class DealsPresenter extends AbstractPresenter<DealsView> {
         if (buyMode == DealsView.BUY_NORMAL) {
             Navigator.get(getView()).show(new PaymentStackable(deal));
         } else {
-            Navigator.get(getView()).show(new PaymentStackable(deal));
+            Navigator.get(getView()).show(new MasterpassStackable(deal));
         }
     }
 }

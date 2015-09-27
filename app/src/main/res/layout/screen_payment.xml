@@ -29,7 +29,9 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="12dp"
             android:layout_marginRight="12dp"
-            android:background="@android:color/white">
+            android:background="@android:color/white"
+            android:paddingBottom="10dp"
+            android:paddingTop="10dp">
 
             <com.simplify.android.sdk.CardEditor
                 android:id="@+id/screen_payment_cardeditor"

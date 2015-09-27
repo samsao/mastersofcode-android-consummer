@@ -62,7 +62,7 @@ public class PaymentView extends PresentedLinearLayout<PaymentPresenter> {
     }
 
     public void show(Deal deal) {
-//        cardEditor.setAmount(deal.getPrice());
+        checkoutButton.setText(String.format("CHECKOUT (%d$)", (int) deal.getPrice()));
     }
 
     public void showFailure() {
@@ -90,6 +90,7 @@ public class PaymentView extends PresentedLinearLayout<PaymentPresenter> {
 
     @OnClick(R.id.screen_payment_checkout)
     void checkoutClick() {
+        if (!cardEditor.isValid()) return;
         presenter.chargeClick(cardEditor.getCard());
     }
 
@@ -102,7 +103,10 @@ public class PaymentView extends PresentedLinearLayout<PaymentPresenter> {
         editText = (EditText) cardEditor.findViewById(com.simplify.android.sdk.R.id.simplify_cvc);
         editText.setText("123");
 
-        editText = (EditText) cardEditor.findViewById(com.simplify.android.sdk.R.id.simplify_expiry);
-        editText.setText("09/18");
+        editText = (EditText) cardEditor.findViewById(com.simplify.android.sdk.R.id.simplify_zip);
+        editText.setText("95530");
+
+//        editText = (EditText) cardEditor.findViewById(com.simplify.android.sdk.R.id.simplify_expiry);
+//        editText.setText("09/18");
     }
 }
