@@ -1,14 +1,19 @@
 package com.oyeoye.consumer.presentation;
 
 import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 
 import com.oyeoye.consumer.DaggerScope;
 import com.oyeoye.consumer.RootActivity;
+import com.oyeoye.consumer.manager.SessionManager;
+import com.oyeoye.consumer.service.RegistrationIntentService;
 
 import javax.inject.Inject;
 
@@ -23,11 +28,12 @@ import mortar.bundler.BundleService;
 @DaggerScope(RootActivity.class)
 public class RootActivityPresenter extends Presenter<RootActivityPresenter.Activity> {
 
+    private SessionManager mSessionManager;
     private SetupToolbarHandler toolbarHandler;
 
     @Inject
-    public RootActivityPresenter() {
-
+    public RootActivityPresenter(SessionManager sessionManager) {
+        mSessionManager = sessionManager;
     }
 
     @Override
@@ -35,6 +41,15 @@ public class RootActivityPresenter extends Presenter<RootActivityPresenter.Activ
         return BundleService.getBundleService(activity.getContext());
     }
 
+
+    @Override
+    protected void onLoad(Bundle savedInstanceState) {
+        if (TextUtils.isEmpty(mSessionManager.getGcmToken())) {
+            // Start IntentService to register this application with GCM.
+            Intent intentGoogleService = new Intent(getView().getContext(), RegistrationIntentService.class);
+            ((RootActivity) getView()).startService(intentGoogleService);
+        }
+    }
 
     public void setupToolbar(Toolbar toolbar) {
         if (toolbar != null) {
