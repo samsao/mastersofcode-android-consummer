@@ -34,7 +34,7 @@ public class DealsPresenter extends AbstractPresenter<DealsView> {
         getView().show(deals);
     }
 
-    public void onDealClick(Deal deal, int buyMode) {
+    public void dealClick(Deal deal, int buyMode) {
         StackablePath path;
         if (buyMode == DealsView.BUY_NORMAL) {
             path = new PaymentStackable(deal);
@@ -42,6 +42,6 @@ public class DealsPresenter extends AbstractPresenter<DealsView> {
             path = new PaymentStackable(deal);
         }
 
-        Navigator.get(getView()).push(path);
+        Navigator.get(getView()).show(path);
     }
 }

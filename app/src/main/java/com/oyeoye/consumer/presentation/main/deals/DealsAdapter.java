@@ -60,7 +60,7 @@ public class DealsAdapter extends RecyclerView.Adapter<DealsAdapter.ViewHolder> 
     @Override
     public void onBindViewHolder(ViewHolder holder, final int position) {
         final Deal deal = items.get(position);
-        holder.nameTextView.setText(deal.getName());
+        holder.nameTextView.setText(deal.getTitle());
 
         holder.buyButton.setOnClickListener(new View.OnClickListener() {
             @Override

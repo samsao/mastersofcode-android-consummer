@@ -1,11 +1,9 @@
 package com.oyeoye.consumer.presentation.main.deals;
 
 import android.content.Context;
-import android.support.v7.widget.LinearLayoutCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ProgressBar;
 
 import com.oyeoye.consumer.R;
@@ -53,12 +51,12 @@ public class DealsView extends PresentedFrameLayout<DealsPresenter> {
         DealsAdapter adapter = new DealsAdapter(deals, new DealsAdapter.Listener() {
             @Override
             public void onDealBuyClick(Deal deal) {
-                presenter.onDealClick(deal, BUY_NORMAL);
+                presenter.dealClick(deal, BUY_NORMAL);
             }
 
             @Override
             public void onDealMasterpassClick(Deal deal) {
-                presenter.onDealClick(deal, BUY_MASTER);
+                presenter.dealClick(deal, BUY_MASTER);
             }
         });
         recyclerView.setAdapter(adapter);

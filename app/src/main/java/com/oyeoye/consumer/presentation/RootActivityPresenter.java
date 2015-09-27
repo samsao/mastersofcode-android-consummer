@@ -6,6 +6,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.oyeoye.consumer.DaggerScope;
 import com.oyeoye.consumer.RootActivity;
@@ -34,7 +35,6 @@ public class RootActivityPresenter extends Presenter<RootActivityPresenter.Activ
     protected BundleService extractBundleService(RootActivityPresenter.Activity activity) {
         return BundleService.getBundleService(activity.getContext());
     }
-
 
     public void setupToolbar(Toolbar toolbar) {
         if (toolbar != null) {

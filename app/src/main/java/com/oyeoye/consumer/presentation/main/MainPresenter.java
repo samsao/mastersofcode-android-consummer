@@ -14,9 +14,11 @@ import com.oyeoye.consumer.presentation.SetupToolbarHandler;
 import com.oyeoye.consumer.presentation.main.deals.stackable.DealsStackable;
 import com.oyeoye.consumer.presentation.main.pickups.stackable.PickupsStackable;
 
+import architect.ReceivesResult;
 import architect.robot.AutoStackable;
 import autodagger.AutoComponent;
 import autodagger.AutoExpose;
+import timber.log.Timber;
 
 /**
  * @author Lukasz Piliszczuk - lukasz.pili@gmail.com
@@ -27,7 +29,7 @@ import autodagger.AutoExpose;
 )
 @DaggerScope(MainPresenter.class)
 @AutoExpose(MainPresenter.class)
-public class MainPresenter extends AbstractPresenter<MainView> implements SetupToolbarHandler {
+public class MainPresenter extends AbstractPresenter<MainView> implements SetupToolbarHandler, ReceivesResult<Boolean> {
 
     private final RootActivityPresenter activityPresenter;
 
@@ -59,5 +61,11 @@ public class MainPresenter extends AbstractPresenter<MainView> implements SetupT
     public void onViewAttachedToWindow() {
         activityPresenter.setupToolbar(getView().toolbar);
         activityPresenter.resetMenu(this);
+    }
+
+    @Override
+    public void onReceivedResult(Boolean result) {
+        Timber.d("Receives result: %b", result);
+        getView().tabLayout.getTabAt(1).select();
     }
 }

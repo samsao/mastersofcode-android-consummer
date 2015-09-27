@@ -4,6 +4,7 @@ import com.google.gson.GsonBuilder;
 import com.oyeoye.consumer.App;
 import com.oyeoye.consumer.AppConstants;
 import com.oyeoye.consumer.DaggerScope;
+import com.oyeoye.consumer.rest.service.TransactionService;
 import com.oyeoye.consumer.rest.service.UserService;
 import com.squareup.okhttp.OkHttpClient;
 
@@ -20,6 +21,7 @@ import retrofit.converter.GsonConverter;
 public class RestClient {
 
     private UserService userService;
+    private TransactionService transactionService;
 
     @Inject
     public RestClient() {
@@ -37,9 +39,14 @@ public class RestClient {
         RestAdapter restAdapter = builder.build();
 
         userService = restAdapter.create(UserService.class);
+        transactionService = restAdapter.create(TransactionService.class);
     }
 
     public UserService getUserService() {
         return userService;
+    }
+
+    public TransactionService getTransactionService() {
+        return transactionService;
     }
 }

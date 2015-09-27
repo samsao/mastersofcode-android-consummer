@@ -46,12 +46,9 @@ public class MainView extends PresentedFrameLayout<MainPresenter> {
 
 
     public void show(DealsStackable dealsStackable, PickupsStackable pickupsStackable) {
-        tabLayout.addTab(tabLayout.newTab().setText("Deals"));
-        tabLayout.addTab(tabLayout.newTab().setText("Pickups"));
-
-        StackablePagerAdapter adapter = new StackablePagerAdapter(getContext(), dealsStackable, pickupsStackable);
+        StackablePagerAdapter adapter = new MainPagerAdapter(getContext(), dealsStackable, pickupsStackable);
         pager.setAdapter(adapter);
-        pager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
+        tabLayout.setupWithViewPager(pager);
     }
 
     @Override
