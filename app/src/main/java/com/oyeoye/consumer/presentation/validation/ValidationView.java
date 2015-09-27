@@ -10,6 +10,7 @@ import com.oyeoye.consumer.presentation.validation.stackable.ValidationStackable
 import architect.robot.DaggerService;
 import autodagger.AutoInjector;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * @author Lukasz Piliszczuk - lukasz.pili@gmail.com
@@ -23,5 +24,10 @@ public class ValidationView extends PresentedLinearLayout<ValidationPresenter> {
 
         View view = View.inflate(context, R.layout.screen_validation, this);
         ButterKnife.bind(view);
+    }
+
+    @OnClick(R.id.screen_validation_done)
+    void doneClick() {
+        presenter.doneClick();
     }
 }

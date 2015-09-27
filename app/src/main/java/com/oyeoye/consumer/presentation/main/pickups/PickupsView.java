@@ -13,6 +13,7 @@ import com.oyeoye.consumer.R;
 import com.oyeoye.consumer.model.Transaction;
 import com.oyeoye.consumer.presentation.base.PresentedFrameLayout;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import architect.robot.DaggerService;
@@ -39,6 +40,9 @@ public class PickupsView extends PresentedFrameLayout<PickupsPresenter> {
     @Bind(R.id.screen_pickups_retry)
     public Button retryButton;
 
+    private PickupsAdapter adapter;
+    private List<Transaction> transactions = new ArrayList<>();
+
     public PickupsView(Context context) {
         super(context);
         DaggerService.<PickupsStackableComponent>get(context).inject(this);
@@ -55,13 +59,6 @@ public class PickupsView extends PresentedFrameLayout<PickupsPresenter> {
                 swipeRefreshLayout.setRefreshing(true);
             }
         });
-    }
-
-    public void show(List<Transaction> transactions) {
-        progressBar.setVisibility(GONE);
-        retryButton.setVisibility(GONE);
-        swipeRefreshLayout.setVisibility(VISIBLE);
-        swipeRefreshLayout.setRefreshing(false);
 
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
@@ -76,13 +73,24 @@ public class PickupsView extends PresentedFrameLayout<PickupsPresenter> {
             }
         });
 
-        PickupsAdapter adapter = new PickupsAdapter(transactions, new PickupsAdapter.Listener() {
+        adapter = new PickupsAdapter(transactions, new PickupsAdapter.Listener() {
             @Override
             public void onTransactionValidateClick(Transaction transaction) {
                 presenter.validateClick(transaction);
             }
         });
         recyclerView.setAdapter(adapter);
+    }
+
+    public void show(List<Transaction> transactions) {
+        progressBar.setVisibility(GONE);
+        retryButton.setVisibility(GONE);
+        swipeRefreshLayout.setVisibility(VISIBLE);
+        swipeRefreshLayout.setRefreshing(false);
+
+        this.transactions.clear();
+        this.transactions.addAll(transactions);
+        adapter.notifyDataSetChanged();
     }
 
     public void reload() {

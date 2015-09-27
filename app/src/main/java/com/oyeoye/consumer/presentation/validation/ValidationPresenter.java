@@ -70,4 +70,7 @@ public class ValidationPresenter extends AbstractPresenter<ValidationView> {
         }
     }
 
+    public void doneClick() {
+        Navigator.get(getView().getContext()).back(true);
+    }
 }

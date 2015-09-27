@@ -37,11 +37,11 @@
     </LinearLayout>
 
     <Button
-        android:id="@+id/screen_validation_manual"
+        android:id="@+id/screen_validation_done"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@android:color/transparent"
-        android:text="Manually validate"
+        android:text="DONE"
         android:textColor="@color/dark_yellow"
         android:textSize="16sp"/>
 </LinearLayout>

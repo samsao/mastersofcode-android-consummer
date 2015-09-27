@@ -13,6 +13,7 @@ import com.oyeoye.consumer.R;
 import com.oyeoye.consumer.model.Deal;
 import com.oyeoye.consumer.presentation.base.PresentedFrameLayout;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import architect.robot.DaggerService;
@@ -42,6 +43,9 @@ public class DealsView extends PresentedFrameLayout<DealsPresenter> {
     @Bind(R.id.screen_deals_retry)
     public Button retryButton;
 
+    private DealsAdapter adapter;
+    private List<Deal> deals = new ArrayList<>();
+
     public DealsView(Context context) {
         super(context);
         DaggerService.<DealsStackableComponent>get(context).inject(this);
@@ -56,13 +60,18 @@ public class DealsView extends PresentedFrameLayout<DealsPresenter> {
                 swipeRefreshLayout.setRefreshing(true);
             }
         });
-    }
 
-    public void show(List<Deal> deals) {
-        progressBar.setVisibility(GONE);
-        retryButton.setVisibility(GONE);
-        swipeRefreshLayout.setVisibility(VISIBLE);
-        swipeRefreshLayout.setRefreshing(false);
+        adapter = new DealsAdapter(deals, new DealsAdapter.Listener() {
+            @Override
+            public void onDealBuyClick(Deal deal) {
+                presenter.dealClick(deal, BUY_NORMAL);
+            }
+
+            @Override
+            public void onDealMasterpassClick(Deal deal) {
+                presenter.dealClick(deal, BUY_MASTER);
+            }
+        });
 
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
@@ -76,19 +85,18 @@ public class DealsView extends PresentedFrameLayout<DealsPresenter> {
                 }
             }
         });
-
-        DealsAdapter adapter = new DealsAdapter(deals, new DealsAdapter.Listener() {
-            @Override
-            public void onDealBuyClick(Deal deal) {
-                presenter.dealClick(deal, BUY_NORMAL);
-            }
-
-            @Override
-            public void onDealMasterpassClick(Deal deal) {
-                presenter.dealClick(deal, BUY_MASTER);
-            }
-        });
         recyclerView.setAdapter(adapter);
+    }
+
+    public void show(List<Deal> deals) {
+        progressBar.setVisibility(GONE);
+        retryButton.setVisibility(GONE);
+        swipeRefreshLayout.setVisibility(VISIBLE);
+        swipeRefreshLayout.setRefreshing(false);
+
+        this.deals.clear();
+        this.deals.addAll(deals);
+        adapter.notifyDataSetChanged();
     }
 
     public void showLoading() {
