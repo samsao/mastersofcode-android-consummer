@@ -9,6 +9,8 @@ import com.oyeoye.consumer.model.User;
  */
 public class SessionManager {
 
+    public final static String GCM_TOKEN_SENT_TO_SERVER_KEY = "com.oyeoye.merchant.business.GCM_TOKEN_SENT_TO_SERVER_KEY";
+    public final static String GCM_TOKEN = "com.oyeoye.merchant.business.GCM_TOKEN";
     private final SharedPreferences sharedPreferences;
     private User user;
 
@@ -40,5 +42,9 @@ public class SessionManager {
         user = new User();
         user.setPhone(phone);
         save();
+    }
+
+    public String getGcmToken() {
+        return sharedPreferences.getString(GCM_TOKEN, null);
     }
 }
