@@ -1,12 +1,24 @@
 package com.oyeoye.consumer.model;
 
+import com.google.gson.annotations.SerializedName;
+
 /**
  * @author Lukasz Piliszczuk - lukasz.pili@gmail.com
  */
 public class User {
 
+    @SerializedName("_id")
+    private String id;
     private String phone;
-    private String name;
+    private String token;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
     public String getPhone() {
         return phone;
@@ -16,11 +28,11 @@ public class User {
         this.phone = phone;
     }
 
-    public String getName() {
-        return name;
+    public String getToken() {
+        return token;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setToken(String token) {
+        this.token = token;
     }
 }

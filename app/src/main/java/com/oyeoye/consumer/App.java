@@ -5,7 +5,11 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
 import com.crashlytics.android.Crashlytics;
+import com.digits.sdk.android.Digits;
 import com.oyeoye.consumer.manager.SessionManager;
+import com.simplify.android.sdk.Simplify;
+import com.twitter.sdk.android.core.TwitterAuthConfig;
+import com.twitter.sdk.android.core.TwitterCore;
 
 import architect.robot.DaggerService;
 import autodagger.AutoComponent;
@@ -23,6 +27,7 @@ import timber.log.Timber;
 )
 @DaggerScope(App.class)
 public class App extends Application {
+
     private MortarScope scope;
 
     @Override
@@ -34,13 +39,16 @@ public class App extends Application {
     public void onCreate() {
         super.onCreate();
 
+        AppComponent component = DaggerAppComponent.builder().module(new Module()).build();
+
+        TwitterAuthConfig authConfig = new TwitterAuthConfig(AppConstants.TWITTER_KEY, AppConstants.TWITTER_SECRET);
+
         if (BuildConfig.DEBUG) {
             Timber.plant(new Timber.DebugTree());
+            Fabric.with(this, new TwitterCore(authConfig), new Digits());
         } else {
-            Fabric.with(this, new Crashlytics());
+            Fabric.with(this, new Crashlytics(), new TwitterCore(authConfig), new Digits());
         }
-
-        AppComponent component = DaggerAppComponent.builder().module(new Module()).build();
 
         scope = MortarScope.buildRootScope()
                 .withService(DaggerService.SERVICE_NAME, component)
@@ -61,5 +69,13 @@ public class App extends Application {
         public SessionManager provideSessionManager(SharedPreferences sharedPreferences) {
             return new SessionManager(sharedPreferences);
         }
+
+        @Provides
+        @DaggerScope(App.class)
+        public Simplify provideSimplify() {
+            return new Simplify(AppConstants.SIMPLIFY_PUBLIC);
+        }
+
+
     }
 }

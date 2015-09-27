@@ -6,13 +6,23 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 
+import com.digits.sdk.android.AuthCallback;
+import com.digits.sdk.android.DigitsException;
+import com.digits.sdk.android.DigitsSession;
 import com.oyeoye.consumer.DaggerScope;
 import com.oyeoye.consumer.manager.SessionManager;
+import com.oyeoye.consumer.model.User;
 import com.oyeoye.consumer.presentation.AbstractPresenter;
 import com.oyeoye.consumer.presentation.ActivityContainerComponent;
 import com.oyeoye.consumer.presentation.RootActivityPresenter;
 import com.oyeoye.consumer.presentation.SetupToolbarHandler;
+import com.oyeoye.consumer.presentation.main.stackable.MainStackable;
+import com.oyeoye.consumer.rest.RestClient;
+import com.twitter.sdk.android.core.Callback;
+import com.twitter.sdk.android.core.Result;
+import com.twitter.sdk.android.core.TwitterException;
 
+import architect.Navigator;
 import architect.robot.AutoStackable;
 import autodagger.AutoComponent;
 import autodagger.AutoExpose;
@@ -30,15 +40,51 @@ public class LoginPresenter extends AbstractPresenter<LoginView> implements Setu
 
     private final RootActivityPresenter activityPresenter;
     private final SessionManager sessionManager;
+    private final RestClient restClient;
 
-    public LoginPresenter(RootActivityPresenter activityPresenter, SessionManager sessionManager) {
+    private AuthCallback authCallback = new AuthCallback() {
+        @Override
+        public void success(DigitsSession digitsSession, String phone) {
+            if (!hasView()) return;
+            loginWithPhone(phone);
+        }
+
+        @Override
+        public void failure(DigitsException e) {
+            if (!hasView()) return;
+
+        }
+    };
+
+    public LoginPresenter(RootActivityPresenter activityPresenter, SessionManager sessionManager, RestClient restClient) {
         this.activityPresenter = activityPresenter;
         this.sessionManager = sessionManager;
+        this.restClient = restClient;
     }
 
     @Override
     protected void onLoad(Bundle savedInstanceState) {
+        getView().configure(authCallback);
+    }
 
+    private void loginWithPhone(final String phone) {
+        getView().showLoading();
+
+        restClient.getUserService().connect(phone, "coucou", new Callback<User>() {
+            @Override
+            public void success(Result<User> result) {
+                if (!hasView() || result == null) return;
+                getView().hideLoading();
+
+                Navigator.get(getView()).push(new MainStackable());
+            }
+
+            @Override
+            public void failure(TwitterException e) {
+                if (!hasView()) return;
+                getView().hideLoading();
+            }
+        });
     }
 
     @Override

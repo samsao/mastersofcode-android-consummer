@@ -24,10 +24,21 @@ public class SessionManager {
 
         user = new User();
         user.setPhone(sharedPreferences.getString("phone", null));
-        user.setName(sharedPreferences.getString("name", null));
+    }
+
+    private void save() {
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString("phone", user.getPhone());
+        editor.apply();
     }
 
     public boolean isLogged() {
         return user != null;
+    }
+
+    public void authenticate(String phone) {
+        user = new User();
+        user.setPhone(phone);
+        save();
     }
 }

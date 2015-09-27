@@ -1,11 +1,10 @@
 package com.oyeoye.consumer.presentation.login;
 
 import android.content.Context;
-import android.support.v7.widget.LinearLayoutCompat;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.view.ViewGroup;
 
+import com.digits.sdk.android.AuthCallback;
 import com.digits.sdk.android.DigitsAuthButton;
 import com.oyeoye.consumer.R;
 import com.oyeoye.consumer.presentation.base.PresentedLinearLayout;
@@ -28,12 +27,26 @@ public class LoginView extends PresentedLinearLayout<LoginPresenter> {
     @Bind(R.id.screen_login_auth)
     protected DigitsAuthButton authButton;
 
+    @Bind(R.id.screen_login_overlay)
+    protected View overlay;
+
     public LoginView(Context context) {
         super(context);
         DaggerService.<LoginStackableComponent>get(context).inject(this);
 
         View view = View.inflate(context, R.layout.screen_login, this);
         ButterKnife.bind(view);
-        setLayoutParams(new LinearLayoutCompat.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+    }
+
+    public void configure(AuthCallback callback) {
+        authButton.setCallback(callback);
+    }
+
+    public void showLoading() {
+        overlay.setVisibility(VISIBLE);
+    }
+
+    public void hideLoading() {
+        overlay.setVisibility(GONE);
     }
 }

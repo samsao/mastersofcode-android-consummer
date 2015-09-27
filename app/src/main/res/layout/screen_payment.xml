@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:simplify="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <include layout="@layout/include_toolbar"/>
+
+        <com.simplify.android.sdk.view.CardEditor
+            android:id="@+id/screen_payment_cardeditor"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            simplify:closeable="false"/>
+
+        <!--<ScrollView-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent">-->
+
+        <!--<LinearLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:orientation="vertical">-->
+
+        <!--<TextView-->
+        <!--android:id="@+id/screen_signup_phone"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_marginBottom="8dp"-->
+        <!--android:paddingLeft="10dp"-->
+        <!--android:paddingRight="10dp"/>-->
+
+        <!--<EditText-->
+        <!--android:id="@+id/screen_signup_name"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:hint="What's your name?"-->
+        <!--android:paddingLeft="10dp"-->
+        <!--android:paddingRight="10dp"/>-->
+
+        <!--</LinearLayout>-->
+        <!--</ScrollView>-->
+    </LinearLayout>
+
+    <com.oyeoye.consumer.ui.LoadingView
+        android:id="@+id/screen_payment_overlay"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"/>
+
+</FrameLayout>
