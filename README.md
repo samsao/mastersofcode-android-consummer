@@ -1,4 +1,4 @@
-# Master hack - OyeOye Consumer app
+# Master hack - OyeOye
 
 ## Payment
 
@@ -15,3 +15,8 @@ OyeOye is made with Mortar / Dagger2 / Mortar-Architect / AutoDagger2.
 We don't use Fragments here! :)
 
 Remaining architecture is pretty standard: Retrofit, Crashlytics, Digits, Timber, etc.
+
+
+## NFC BEAM
+
+We use android beam with NFC to exchange data between the consumer and retailer app
