@@ -154,4 +154,6 @@ dependencies {
 
     compile 'com.simplify:simplify-android:2.0.1'
     compile 'com.google.android.gms:play-services-gcm:8.1.0'
+
+    compile 'org.apache.commons:commons-lang3:3.3.2'
 }

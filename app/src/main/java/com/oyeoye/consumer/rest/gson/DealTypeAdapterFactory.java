@@ -8,14 +8,14 @@ import com.google.gson.TypeAdapterFactory;
 import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
-import com.oyeoye.consumer.model.Transaction;
+import com.oyeoye.consumer.model.Deal;
 
 import java.io.IOException;
 
 /**
  * Created by lukas on 6/17/14.
  */
-public class TransactionTypeAdapterFactory implements TypeAdapterFactory {
+public class DealTypeAdapterFactory implements TypeAdapterFactory {
 
     public <T> TypeAdapter<T> create(Gson gson, final TypeToken<T> type) {
 
@@ -29,24 +29,19 @@ public class TransactionTypeAdapterFactory implements TypeAdapterFactory {
             }
 
             public T read(JsonReader in) throws IOException {
-                if (!type.getRawType().equals(Transaction.class)) {
+                if (!type.getRawType().equals(Deal.class)) {
                     return delegate.read(in);
                 }
 
                 JsonElement jsonElement = elementAdapter.read(in);
                 JsonObject jsonObject = jsonElement.getAsJsonObject();
 
-                JsonElement element = jsonObject.get("deal");
+                JsonElement element = jsonObject.get("merchant");
                 if (element.isJsonPrimitive()) {
-                    jsonObject.remove("deal");
+                    jsonObject.remove("merchant");
                 }
 
-//                element = jsonObject.get("merchant");
-//                if (element.isJsonPrimitive()) {
-//                    jsonObject.remove("merchant");
-//                }
-
-                return delegate.fromJsonTree(jsonObject);
+                return delegate.fromJsonTree(jsonElement);
             }
         }.nullSafe();
     }

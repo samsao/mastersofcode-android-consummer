@@ -1,4 +1,4 @@
-<html>
+<!DOCTYPE html>
 <head>
     <script type="text/javascript"
             src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
@@ -9,12 +9,14 @@
     <script>
     SimplifyCommerce.hostedPayments(
         function(response) {
-            // response handler
+            console.log('DONE DONE');
+            window.alert(response.cardToken);
         },
         {
             scKey: "sbpb_YzlhZWZjMTEtMmE4Zi00NjMzLTk3YWYtYjNiYzU0MDdmZDBi",
             color: "#12B830",
             masterpass: true,
+            operation: 'create.token',
         }
     );
 
@@ -26,15 +28,10 @@
 
 <body>
 
-<iframe name="my-hosted-form"
-        data-sc-key="sbpb_YzlhZWZjMTEtMmE4Zi00NjMzLTk3YWYtYjNiYzU0MDdmZDBi"
-        data-name="OyeOye"
-        data-description="Oye Oye"
-        data-reference="99999"
-        data-amount="3000"
-        data-color="#12B830"
+<button name="my-hosted-form"
+        data-operation='create.token'
         masterpass="true"
         style="display:none">
-</iframe>
+</button>
 </body>
 </html>

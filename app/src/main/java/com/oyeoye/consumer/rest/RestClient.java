@@ -5,6 +5,7 @@ import com.oyeoye.consumer.App;
 import com.oyeoye.consumer.AppConstants;
 import com.oyeoye.consumer.DaggerScope;
 import com.oyeoye.consumer.manager.SessionManager;
+import com.oyeoye.consumer.rest.gson.DealTypeAdapterFactory;
 import com.oyeoye.consumer.rest.gson.TransactionTypeAdapterFactory;
 import com.oyeoye.consumer.rest.service.DealService;
 import com.oyeoye.consumer.rest.service.TransactionService;
@@ -42,6 +43,7 @@ public class RestClient {
                 .setEndpoint(AppConstants.API_URL)
                 .setConverter(new GsonConverter(gsonBuilder
                         .registerTypeAdapterFactory(new TransactionTypeAdapterFactory())
+                        .registerTypeAdapterFactory(new DealTypeAdapterFactory())
                         .create()))
                 .setRequestInterceptor(new RequestInterceptor() {
                     @Override
