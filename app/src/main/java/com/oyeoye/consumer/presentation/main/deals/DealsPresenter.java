@@ -25,6 +25,8 @@ public class DealsPresenter extends AbstractPresenter<DealsView> {
     private final RootActivityPresenter activityPresenter;
     private final RestClient restClient;
 
+    private List<Deal> deals;
+
     public DealsPresenter(RootActivityPresenter activityPresenter, RestClient restClient) {
         this.activityPresenter = activityPresenter;
         this.restClient = restClient;
@@ -32,19 +34,7 @@ public class DealsPresenter extends AbstractPresenter<DealsView> {
 
     @Override
     protected void onLoad(Bundle savedInstanceState) {
-        restClient.getDealService().load(new Callback<List<Deal>>() {
-            @Override
-            public void success(List<Deal> deals, Response response) {
-                if (!hasView()) return;
-                getView().show(deals);
-            }
-
-            @Override
-            public void failure(RetrofitError error) {
-                if (!hasView()) return;
-                Timber.d("Error: %s", error.getMessage());
-            }
-        });
+        load();
     }
 
     public void dealClick(Deal deal, int buyMode) {
@@ -53,5 +43,28 @@ public class DealsPresenter extends AbstractPresenter<DealsView> {
         } else {
             Navigator.get(getView()).show(new MasterpassStackable(deal));
         }
+    }
+
+    public void load() {
+        if (deals == null || deals.isEmpty()) {
+            getView().showLoading();
+        }
+
+        restClient.getDealService().load(new Callback<List<Deal>>() {
+            @Override
+            public void success(List<Deal> deals, Response response) {
+                if (!hasView()) return;
+                DealsPresenter.this.deals = deals;
+                getView().show(deals);
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                if (!hasView()) return;
+                Timber.d("Error: %s", error.getMessage());
+                DealsPresenter.this.deals = null;
+                getView().showError();
+            }
+        });
     }
 }
