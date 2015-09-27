@@ -4,6 +4,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.oyeoye.consumer.R;
@@ -21,8 +22,11 @@ public class PickupsAdapter extends RecyclerView.Adapter<PickupsAdapter.ViewHold
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
-        @Bind(R.id.row_deal_name)
+        @Bind(R.id.row_transaction_name)
         public TextView nameTextView;
+
+        @Bind(R.id.row_transaction_validate)
+        public Button validateButton;
 
         public ViewHolder(View view) {
             super(view);
@@ -31,7 +35,7 @@ public class PickupsAdapter extends RecyclerView.Adapter<PickupsAdapter.ViewHold
     }
 
     public interface Listener {
-
+        void onTransactionValidateClick(Transaction transaction);
     }
 
     private final List<Transaction> items;
@@ -44,14 +48,21 @@ public class PickupsAdapter extends RecyclerView.Adapter<PickupsAdapter.ViewHold
 
     @Override
     public PickupsAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_deal, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_transaction, parent, false);
         return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(ViewHolder holder, final int position) {
         final Transaction transaction = items.get(position);
-        holder.nameTextView.setText("BLAH");
+        holder.nameTextView.setText(transaction.getDeal().getTitle());
+
+        holder.validateButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                listener.onTransactionValidateClick(transaction);
+            }
+        });
     }
 
     @Override

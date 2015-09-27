@@ -2,10 +2,12 @@ package com.oyeoye.consumer.model;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
+
 /**
  * @author Lukasz Piliszczuk - lukasz.pili@gmail.com
  */
-public class Transaction {
+public class Transaction implements Serializable {
 
     public static final String PAYMENT_STATUS_APPROVED = "APPROVED";
 

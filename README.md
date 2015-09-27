@@ -11,7 +11,7 @@ We skip the first screen of the <Iframe> because we want to go directly to the M
 
 ## Architecture
 
-OyeOye is made with Mortar/Dagger2/Mortar-Architect.
-We don't use Fragments here!
+OyeOye is made with Mortar / Dagger2 / Mortar-Architect / AutoDagger2.
+We don't use Fragments here! :)
 
 Remaining architecture is pretty standard: Retrofit, Crashlytics, Digits, Timber, etc.

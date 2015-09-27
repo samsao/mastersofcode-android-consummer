@@ -46,7 +46,12 @@ public class PickupsView extends PresentedFrameLayout<PickupsPresenter> {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
 
-        PickupsAdapter adapter = new PickupsAdapter(transactions, null);
+        PickupsAdapter adapter = new PickupsAdapter(transactions, new PickupsAdapter.Listener() {
+            @Override
+            public void onTransactionValidateClick(Transaction transaction) {
+                presenter.validateClick(transaction);
+            }
+        });
         recyclerView.setAdapter(adapter);
     }
 

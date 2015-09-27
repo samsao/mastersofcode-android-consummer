@@ -4,10 +4,12 @@ import android.os.Bundle;
 
 import com.oyeoye.consumer.model.Transaction;
 import com.oyeoye.consumer.presentation.AbstractPresenter;
+import com.oyeoye.consumer.presentation.validation.stackable.ValidationStackable;
 import com.oyeoye.consumer.rest.RestClient;
 
 import java.util.List;
 
+import architect.Navigator;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
@@ -42,5 +44,9 @@ public class PickupsPresenter extends AbstractPresenter<PickupsView> {
                 if (!hasView()) return;
             }
         });
+    }
+
+    public void validateClick(Transaction transaction) {
+        Navigator.get(getView()).push(new ValidationStackable(transaction));
     }
 }
