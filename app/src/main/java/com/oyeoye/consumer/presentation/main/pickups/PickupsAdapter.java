@@ -1,15 +1,22 @@
 package com.oyeoye.consumer.presentation.main.pickups;
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.oyeoye.consumer.AppConstants;
 import com.oyeoye.consumer.R;
+import com.oyeoye.consumer.model.Deal;
 import com.oyeoye.consumer.model.Transaction;
+import com.oyeoye.consumer.presentation.util.AspectRatioImageView;
+import com.squareup.picasso.Picasso;
 
+import java.text.DecimalFormat;
 import java.util.List;
 
 import butterknife.Bind;
@@ -22,15 +29,38 @@ public class PickupsAdapter extends RecyclerView.Adapter<PickupsAdapter.ViewHold
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
+        private Context mContext;
+
+        @Bind(R.id.row_transaction_image)
+        public AspectRatioImageView mImage;
         @Bind(R.id.row_transaction_name)
-        public TextView nameTextView;
-
+        public TextView mDealTitle;
+        @Bind(R.id.row_transaction_description)
+        public TextView mDealDescription;
+        @Bind(R.id.row_transaction_price)
+        public TextView mDealPrice;
         @Bind(R.id.row_transaction_validate)
-        public Button validateButton;
+        public Button mValidateButton;
+        @Bind(R.id.row_transaction_validate_layout)
+        public LinearLayout mValidateLayout;
 
-        public ViewHolder(View view) {
-            super(view);
-            ButterKnife.bind(this, view);
+        public ViewHolder(View itemView) {
+            super(itemView);
+            ButterKnife.bind(this, itemView);
+            mContext = itemView.getContext();
+        }
+
+        public void setup(final Transaction transaction) {
+            final Deal deal = transaction.getDeal();
+            Picasso.with(mContext).load(AppConstants.API_URL + "/" + deal.getImage()).into(mImage);
+            mDealTitle.setText(deal.getTitle());
+            mDealDescription.setText(deal.getDescription());
+            mDealPrice.setText("1 bought for $" + new DecimalFormat("#.00").format(deal.getPrice()));
+            if (transaction.getStatus() == 0) {
+                mValidateLayout.setVisibility(View.VISIBLE);
+            } else {
+                mValidateLayout.setVisibility(View.GONE);
+            }
         }
     }
 
@@ -55,9 +85,8 @@ public class PickupsAdapter extends RecyclerView.Adapter<PickupsAdapter.ViewHold
     @Override
     public void onBindViewHolder(ViewHolder holder, final int position) {
         final Transaction transaction = items.get(position);
-        holder.nameTextView.setText(transaction.getDeal().getTitle());
-
-        holder.validateButton.setOnClickListener(new View.OnClickListener() {
+        holder.setup(transaction);
+        holder.mValidateButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 listener.onTransactionValidateClick(transaction);
