@@ -29,6 +29,7 @@ import timber.log.Timber;
 public class App extends Application {
 
     private MortarScope scope;
+    private AppComponent component;
 
     @Override
     public Object getSystemService(String name) {
@@ -53,6 +54,10 @@ public class App extends Application {
         scope = MortarScope.buildRootScope()
                 .withService(DaggerService.SERVICE_NAME, component)
                 .build("root");
+    }
+
+    public AppComponent getComponent() {
+        return component;
     }
 
     @dagger.Module

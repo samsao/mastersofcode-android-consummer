@@ -44,9 +44,9 @@ public class LoginPresenter extends AbstractPresenter<LoginView> implements Setu
 
     private AuthCallback authCallback = new AuthCallback() {
         @Override
-        public void success(DigitsSession digitsSession, String phone) {
+        public void success(DigitsSession digitsSession, String res) {
             if (!hasView()) return;
-            loginWithPhone(phone);
+            processPhone(digitsSession.getPhoneNumber());
         }
 
         @Override
@@ -67,15 +67,21 @@ public class LoginPresenter extends AbstractPresenter<LoginView> implements Setu
         getView().configure(authCallback);
     }
 
-    private void loginWithPhone(final String phone) {
+    private void processPhone(final String phone) {
         getView().showLoading();
 
-        restClient.getUserService().connect(phone, "coucou", new Callback<User>() {
+        String gcm = sessionManager.getGcmToken();
+        if (gcm == null) {
+            gcm = "invalid";
+        }
+
+        restClient.getUserService().connect(phone, gcm, new Callback<User>() {
             @Override
             public void success(Result<User> result) {
                 if (!hasView() || result == null) return;
                 getView().hideLoading();
 
+                sessionManager.authenticate(phone);
                 Navigator.get(getView()).push(new MainStackable());
             }
 

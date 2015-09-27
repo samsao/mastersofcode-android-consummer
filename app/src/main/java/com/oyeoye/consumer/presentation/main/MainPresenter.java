@@ -65,7 +65,6 @@ public class MainPresenter extends AbstractPresenter<MainView> implements SetupT
 
     @Override
     public void onReceivedResult(Boolean result) {
-        Timber.d("Receives result: %b", result);
         getView().tabLayout.getTabAt(1).select();
     }
 }

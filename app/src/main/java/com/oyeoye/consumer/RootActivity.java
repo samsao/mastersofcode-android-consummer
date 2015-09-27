@@ -9,8 +9,10 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.oyeoye.consumer.manager.SessionManager;
 import com.oyeoye.consumer.presentation.RootActivityPresenter;
 import com.oyeoye.consumer.presentation.login.stackable.LoginStackable;
+import com.oyeoye.consumer.presentation.main.stackable.MainStackable;
 import com.oyeoye.consumer.presentation.signup.PaymentView;
 
 import javax.inject.Inject;
@@ -30,6 +32,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import mortar.MortarScope;
 import mortar.bundler.BundleServiceRunner;
+import timber.log.Timber;
 
 /**
  * @author Lukasz Piliszczuk - lukasz.pili@gmail.com
@@ -47,6 +50,9 @@ public class RootActivity extends AppCompatActivity implements RootActivityPrese
 
     @Inject
     protected RootActivityPresenter activityPresenter;
+
+    @Inject
+    protected SessionManager sessionManager;
 
     @Bind(R.id.navigator_container)
     protected NavigatorView navigatorView;
@@ -88,7 +94,8 @@ public class RootActivity extends AppCompatActivity implements RootActivityPrese
         DaggerService.<RootActivityComponent>get(this).inject(this);
         activityPresenter.takeView(this);
 
-        navigator = ActivityArchitector.onCreateNavigator(this, savedInstanceState, navigatorView, new LoginStackable());
+        Timber.d("Auto-login? %b", sessionManager.isLogged());
+        navigator = ActivityArchitector.onCreateNavigator(this, savedInstanceState, navigatorView, sessionManager.isLogged() ? new MainStackable() : new LoginStackable());
     }
 
     @Override
