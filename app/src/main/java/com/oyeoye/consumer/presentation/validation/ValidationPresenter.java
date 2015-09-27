@@ -55,7 +55,12 @@ public class ValidationPresenter extends AbstractPresenter<ValidationView> {
                 @Override
                 public void onNdefPushComplete(NfcEvent nfcEvent) {
                     Timber.d("Message sent !");
-                    Navigator.get(getContext()).back(true);
+                    getView().post(new Runnable() {
+                        @Override
+                        public void run() {
+                            Navigator.get(getContext()).back(true);
+                        }
+                    });
                 }
             }, activityPresenter.getActivity());
 
