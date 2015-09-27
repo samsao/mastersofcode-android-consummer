@@ -50,6 +50,10 @@ public class RootActivityPresenter extends Presenter<RootActivityPresenter.Activ
         }
     }
 
+    public android.app.Activity getActivity() {
+        return (android.app.Activity) getView();
+    }
+
     public void startActivity(Activity activity) {
 //        getView().getContext().start
     }

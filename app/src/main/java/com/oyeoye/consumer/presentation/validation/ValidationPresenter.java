@@ -1,5 +1,9 @@
 package com.oyeoye.consumer.presentation.validation;
 
+import android.nfc.NdefMessage;
+import android.nfc.NdefRecord;
+import android.nfc.NfcAdapter;
+import android.nfc.NfcEvent;
 import android.os.Bundle;
 
 import com.oyeoye.consumer.DaggerScope;
@@ -41,7 +45,15 @@ public class ValidationPresenter extends AbstractPresenter<ValidationView> {
 
     @Override
     protected void onLoad(Bundle savedInstanceState) {
-//        getView().show(transaction);
+        NfcAdapter nfcAdapter = NfcAdapter.getDefaultAdapter(getView().getContext());
+        if (nfcAdapter != null) {
+            nfcAdapter.setNdefPushMessageCallback(new NfcAdapter.CreateNdefMessageCallback() {
+                @Override
+                public NdefMessage createNdefMessage(NfcEvent nfcEvent) {
+                    return new NdefMessage(NdefRecord.createTextRecord("en", "test"));
+                }
+            }, activityPresenter.getActivity());
+        }
     }
 
 }
