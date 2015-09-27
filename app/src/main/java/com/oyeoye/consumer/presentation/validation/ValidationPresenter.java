@@ -14,6 +14,8 @@ import com.oyeoye.consumer.presentation.ActivityContainerComponent;
 import com.oyeoye.consumer.presentation.RootActivityPresenter;
 import com.oyeoye.consumer.rest.RestClient;
 
+import java.nio.charset.StandardCharsets;
+
 import architect.Navigator;
 import architect.robot.AutoStackable;
 import architect.robot.FromPath;
@@ -60,7 +62,9 @@ public class ValidationPresenter extends AbstractPresenter<ValidationView> {
             nfcAdapter.setNdefPushMessageCallback(new NfcAdapter.CreateNdefMessageCallback() {
                 @Override
                 public NdefMessage createNdefMessage(NfcEvent nfcEvent) {
-                    return new NdefMessage(NdefRecord.createTextRecord("en", transaction.getId() + ":" + transaction.getKey()));
+                    String data = transaction.getId() + ":" + transaction.getKey();
+                    byte[] bytes = data.getBytes(StandardCharsets.UTF_8);
+                    return new NdefMessage(NdefRecord.createMime("application/com.oyeoye", bytes));
                 }
             }, activityPresenter.getActivity());
         }
