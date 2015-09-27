@@ -11,14 +11,14 @@ import com.oyeoye.consumer.presentation.AbstractPresenter;
 import com.oyeoye.consumer.presentation.ActivityContainerComponent;
 import com.oyeoye.consumer.presentation.RootActivityPresenter;
 import com.oyeoye.consumer.presentation.SetupToolbarHandler;
-import com.oyeoye.consumer.presentation.main.deals.stackable.DealsStackable;
-import com.oyeoye.consumer.presentation.main.pickups.stackable.PickupsStackable;
+import com.oyeoye.consumer.presentation.main.deals.DealsStackable;
+import com.oyeoye.consumer.presentation.main.pickups.PickupsStackable;
+import com.oyeoye.consumer.presentation.main.pickups.PickupsView;
 
 import architect.ReceivesResult;
 import architect.robot.AutoStackable;
 import autodagger.AutoComponent;
 import autodagger.AutoExpose;
-import timber.log.Timber;
 
 /**
  * @author Lukasz Piliszczuk - lukasz.pili@gmail.com
@@ -66,5 +66,7 @@ public class MainPresenter extends AbstractPresenter<MainView> implements SetupT
     @Override
     public void onReceivedResult(Boolean result) {
         getView().tabLayout.getTabAt(1).select();
+        PickupsView pickupsView = (PickupsView) getView().findViewWithTag("pickups_tag");
+        pickupsView.reload();
     }
 }

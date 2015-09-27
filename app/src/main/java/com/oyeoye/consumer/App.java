@@ -74,13 +74,5 @@ public class App extends Application {
         public SessionManager provideSessionManager(SharedPreferences sharedPreferences) {
             return new SessionManager(sharedPreferences);
         }
-
-        @Provides
-        @DaggerScope(App.class)
-        public Simplify provideSimplify() {
-            return new Simplify(AppConstants.SIMPLIFY_PUBLIC);
-        }
-
-
     }
 }

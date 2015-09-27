@@ -6,20 +6,37 @@
     android:background="@color/black_opacity_40">
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:orientation="vertical">
 
-        <RelativeLayout
+        <TextView
+            android:id="@+id/screen_payment_fill"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:background="@android:color/black"
+            android:paddingBottom="6dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:paddingTop="6dp"
+            android:text="Debug helper: Fill card info"
+            android:textColor="@android:color/white"/>
 
-            <com.simplify.android.sdk.view.CardEditor
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="12dp"
+            android:layout_marginRight="12dp"
+            android:background="@android:color/white">
+
+            <com.simplify.android.sdk.CardEditor
                 android:id="@+id/screen_payment_cardeditor"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"/>
+                android:layout_gravity="center"
+                android:padding="6dp"/>
 
             <View
                 android:id="@+id/screen_payment_cardeditor_overlay"
@@ -33,10 +50,25 @@
                 android:visibility="gone"/>
         </RelativeLayout>
 
+        <Button
+            android:id="@+id/screen_payment_checkout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="12dp"
+            android:layout_marginRight="12dp"
+            android:background="@android:color/holo_green_dark"
+            android:paddingBottom="5dp"
+            android:paddingTop="5dp"
+            android:text="CHECKOUT"
+            android:textColor="@android:color/white"
+            android:textSize="16sp"/>
+
         <TextView
             android:id="@+id/screen_payment_message"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="12dp"
+            android:layout_marginRight="12dp"
             android:background="@android:color/holo_red_light"
             android:gravity="center"
             android:paddingBottom="6dp"
@@ -51,6 +83,8 @@
             android:id="@+id/screen_payment_loading"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="12dp"
+            android:layout_marginRight="12dp"
             android:background="@android:color/holo_orange_dark"
             android:orientation="vertical"
             android:paddingBottom="6dp"

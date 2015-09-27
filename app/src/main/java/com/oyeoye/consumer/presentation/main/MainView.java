@@ -10,8 +10,8 @@ import android.view.ViewGroup;
 
 import com.oyeoye.consumer.R;
 import com.oyeoye.consumer.presentation.base.PresentedFrameLayout;
-import com.oyeoye.consumer.presentation.main.deals.stackable.DealsStackable;
-import com.oyeoye.consumer.presentation.main.pickups.stackable.PickupsStackable;
+import com.oyeoye.consumer.presentation.main.deals.DealsStackable;
+import com.oyeoye.consumer.presentation.main.pickups.PickupsStackable;
 import com.oyeoye.consumer.presentation.main.stackable.MainStackableComponent;
 
 import architect.commons.adapter.StackablePagerAdapter;

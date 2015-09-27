@@ -20,20 +20,23 @@
             </intent-filter>
         </activity>
 
+        <activity android:name="com.anypresence.masterpass_android_library.activities.MPLightBox"/>
+
         <receiver
             android:name="com.google.android.gms.gcm.GcmReceiver"
             android:exported="true"
-            android:permission="com.google.android.c2dm.permission.SEND" >
+            android:permission="com.google.android.c2dm.permission.SEND">
             <intent-filter>
-                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
-                <category android:name="com.example.gcm" />
+                <action android:name="com.google.android.c2dm.intent.RECEIVE"/>
+                <category android:name="com.example.gcm"/>
             </intent-filter>
         </receiver>
+
         <service
             android:name=".service.MyGcmListenerService"
-            android:exported="false" >
+            android:exported="false">
             <intent-filter>
-                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+                <action android:name="com.google.android.c2dm.intent.RECEIVE"/>
             </intent-filter>
         </service>
         <service

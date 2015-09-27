@@ -4,8 +4,6 @@ import android.content.SharedPreferences;
 
 import com.oyeoye.consumer.model.User;
 
-import timber.log.Timber;
-
 /**
  * @author Lukasz Piliszczuk - lukasz.pili@gmail.com
  */
@@ -29,11 +27,13 @@ public class SessionManager {
 
         user = new User();
         user.setPhone(phone);
+        user.setToken(sharedPreferences.getString("token", null));
     }
 
     private void save() {
         sharedPreferences.edit()
                 .putString("phone", user.getPhone())
+                .putString("token", user.getToken())
                 .apply();
     }
 
@@ -41,9 +41,8 @@ public class SessionManager {
         return user != null;
     }
 
-    public void authenticate(String phone) {
-        user = new User();
-        user.setPhone(phone);
+    public void authenticate(User user) {
+        this.user = user;
         save();
     }
 

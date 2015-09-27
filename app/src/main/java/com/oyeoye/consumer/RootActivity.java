@@ -13,7 +13,7 @@ import com.oyeoye.consumer.manager.SessionManager;
 import com.oyeoye.consumer.presentation.RootActivityPresenter;
 import com.oyeoye.consumer.presentation.login.stackable.LoginStackable;
 import com.oyeoye.consumer.presentation.main.stackable.MainStackable;
-import com.oyeoye.consumer.presentation.signup.PaymentView;
+import com.oyeoye.consumer.presentation.payment.PaymentView;
 
 import javax.inject.Inject;
 

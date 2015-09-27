@@ -3,6 +3,7 @@ package com.oyeoye.consumer.model;
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * @author Lukasz Piliszczuk - lukasz.pili@gmail.com
@@ -11,18 +12,19 @@ public class Deal implements Serializable {
 
     @SerializedName("_id")
     private String id;
+
+    @SerializedName("merchant")
+    private String merchantId;
+
     private String title;
     private String description;
     private String image;
     private double price;
+    private double originalPrice;
+    private int quantity;
 
-    public Deal() {
-    }
-
-    public Deal(String title, double price) {
-        this.title = title;
-        this.price = price;
-    }
+    @SerializedName("transactions")
+    private List<String> transactionsIds;
 
     public String getId() {
         return id;
@@ -30,6 +32,14 @@ public class Deal implements Serializable {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public String getMerchantId() {
+        return merchantId;
+    }
+
+    public void setMerchantId(String merchantId) {
+        this.merchantId = merchantId;
     }
 
     public String getTitle() {
@@ -62,5 +72,29 @@ public class Deal implements Serializable {
 
     public void setPrice(double price) {
         this.price = price;
+    }
+
+    public double getOriginalPrice() {
+        return originalPrice;
+    }
+
+    public void setOriginalPrice(double originalPrice) {
+        this.originalPrice = originalPrice;
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
+
+    public List<String> getTransactionsIds() {
+        return transactionsIds;
+    }
+
+    public void setTransactionsIds(List<String> transactionsIds) {
+        this.transactionsIds = transactionsIds;
     }
 }

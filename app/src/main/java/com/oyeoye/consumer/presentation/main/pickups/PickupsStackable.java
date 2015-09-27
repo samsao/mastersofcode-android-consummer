@@ -1,11 +1,10 @@
-package com.oyeoye.consumer.presentation.main.deals;
+package com.oyeoye.consumer.presentation.main.pickups;
 
 import android.content.Context;
 import android.view.ViewGroup;
 
 import com.oyeoye.consumer.DaggerScope;
 import com.oyeoye.consumer.RootActivityComponent;
-import com.oyeoye.consumer.presentation.RootActivityPresenter;
 import com.oyeoye.consumer.presentation.main.MainContainerComponent;
 import com.oyeoye.consumer.rest.RestClient;
 
@@ -24,39 +23,39 @@ import mortar.MortarScope;
  */
 @AutoComponent(
         includes = MainContainerComponent.class,
-        target = DealsPresenter.class,
-        modules = DealsStackable.Module.class
+        target = PickupsPresenter.class,
+        modules = PickupsStackable.Module.class
 )
 @Parcel(
         parcelsIndex = false
 )
-@DaggerScope(DealsPresenter.class)
-public class DealsStackable implements StackablePath {
+@DaggerScope(PickupsPresenter.class)
+public class PickupsStackable implements StackablePath {
     @ParcelConstructor
-    public DealsStackable() {
+    public PickupsStackable() {
     }
 
     @Override
     public void configureScope(MortarScope.Builder builder, MortarScope parentScope) {
         RootActivityComponent component = NavigatorServices.getService(parentScope, DaggerService.SERVICE_NAME);
 
-        builder.withService(DaggerService.SERVICE_NAME, DaggerDealsStackableComponent.builder()
+        builder.withService(DaggerService.SERVICE_NAME, DaggerPickupsStackableComponent.builder()
                 .rootActivityComponent(component)
                 .module(new Module())
                 .build());
     }
 
     @Override
-    public DealsView createView(Context context, ViewGroup parent) {
-        return new DealsView(context);
+    public PickupsView createView(Context context, ViewGroup parent) {
+        return new PickupsView(context);
     }
 
     @dagger.Module
     public class Module {
         @Provides
-        @DaggerScope(DealsPresenter.class)
-        public DealsPresenter providesPresenter(RootActivityPresenter activityPresenter, RestClient restClient) {
-            return new DealsPresenter(activityPresenter, restClient);
+        @DaggerScope(PickupsPresenter.class)
+        public PickupsPresenter providesPresenter(RestClient restClient) {
+            return new PickupsPresenter(restClient);
         }
     }
 }

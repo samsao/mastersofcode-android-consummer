@@ -50,6 +50,10 @@ public class RootActivityPresenter extends Presenter<RootActivityPresenter.Activ
         }
     }
 
+    public void startActivity(Activity activity) {
+//        getView().getContext().start
+    }
+
     public void setupToolbar(Toolbar toolbar) {
         if (toolbar != null) {
             ((RootActivity) getView()).setSupportActionBar(toolbar);

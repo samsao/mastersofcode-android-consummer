@@ -18,14 +18,14 @@ import com.oyeoye.consumer.presentation.RootActivityPresenter;
 import com.oyeoye.consumer.presentation.SetupToolbarHandler;
 import com.oyeoye.consumer.presentation.main.stackable.MainStackable;
 import com.oyeoye.consumer.rest.RestClient;
-import com.twitter.sdk.android.core.Callback;
-import com.twitter.sdk.android.core.Result;
-import com.twitter.sdk.android.core.TwitterException;
 
 import architect.Navigator;
 import architect.robot.AutoStackable;
 import autodagger.AutoComponent;
 import autodagger.AutoExpose;
+import retrofit.Callback;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
 
 /**
  * @author Lukasz Piliszczuk - lukasz.pili@gmail.com
@@ -76,17 +76,18 @@ public class LoginPresenter extends AbstractPresenter<LoginView> implements Setu
         }
 
         restClient.getUserService().connect(phone, gcm, new Callback<User>() {
+
             @Override
-            public void success(Result<User> result) {
-                if (!hasView() || result == null) return;
+            public void success(User user, Response response) {
+                if (!hasView() || user == null) return;
                 getView().hideLoading();
 
-                sessionManager.authenticate(phone);
+                sessionManager.authenticate(user);
                 Navigator.get(getView()).push(new MainStackable());
             }
 
             @Override
-            public void failure(TwitterException e) {
+            public void failure(RetrofitError error) {
                 if (!hasView()) return;
                 getView().hideLoading();
             }

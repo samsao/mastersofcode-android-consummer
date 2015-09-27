@@ -9,7 +9,6 @@ import android.widget.ProgressBar;
 import com.oyeoye.consumer.R;
 import com.oyeoye.consumer.model.Deal;
 import com.oyeoye.consumer.presentation.base.PresentedFrameLayout;
-import com.oyeoye.consumer.presentation.main.deals.stackable.DealsStackableComponent;
 
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package com.oyeoye.consumer.presentation.signup;
+package com.oyeoye.consumer.presentation.payment;
 
 import android.os.Bundle;
 
@@ -10,19 +10,18 @@ import com.oyeoye.consumer.presentation.AbstractPresenter;
 import com.oyeoye.consumer.presentation.ActivityContainerComponent;
 import com.oyeoye.consumer.presentation.RootActivityPresenter;
 import com.oyeoye.consumer.rest.RestClient;
+import com.simplify.android.sdk.Card;
+import com.simplify.android.sdk.CardToken;
 import com.simplify.android.sdk.Simplify;
-import com.simplify.android.sdk.model.Card;
-import com.simplify.android.sdk.model.SimplifyError;
-import com.simplify.android.sdk.model.Token;
-import com.twitter.sdk.android.core.Callback;
-import com.twitter.sdk.android.core.Result;
-import com.twitter.sdk.android.core.TwitterException;
 
 import architect.Navigator;
 import architect.robot.AutoStackable;
 import architect.robot.FromPath;
 import autodagger.AutoComponent;
 import autodagger.AutoExpose;
+import retrofit.Callback;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
 import timber.log.Timber;
 
 /**
@@ -41,14 +40,12 @@ public class PaymentPresenter extends AbstractPresenter<PaymentView> {
     private final RootActivityPresenter activityPresenter;
     private final SessionManager sessionManager;
     private final RestClient restClient;
-    private final Simplify simplify;
 
-    public PaymentPresenter(@FromPath Deal deal, RootActivityPresenter activityPresenter, SessionManager sessionManager, RestClient restClient, Simplify simplify) {
+    public PaymentPresenter(@FromPath Deal deal, RootActivityPresenter activityPresenter, SessionManager sessionManager, RestClient restClient) {
         this.deal = deal;
         this.activityPresenter = activityPresenter;
         this.sessionManager = sessionManager;
         this.restClient = restClient;
-        this.simplify = simplify;
     }
 
     @Override
@@ -64,34 +61,38 @@ public class PaymentPresenter extends AbstractPresenter<PaymentView> {
         if (card == null) return;
 
         getView().showLoading();
-        simplify.createCardToken(card, new Simplify.CreateTokenListener() {
+        Simplify.createCardToken(card, new CardToken.Callback() {
             @Override
-            public void onSuccess(Token token) {
+            public void onSuccess(CardToken token) {
                 if (!hasView()) return;
                 Timber.d("Success card token: %s", token.getId());
                 processToken(token);
             }
 
             @Override
-            public void onError(SimplifyError error) {
+            public void onError(Throwable throwable) {
                 if (!hasView()) return;
                 getView().showFailure();
             }
         });
     }
 
-    private void processToken(Token token) {
+    private void processToken(CardToken token) {
+        Timber.d("Post with deal: %s", deal.getId());
         restClient.getTransactionService().add(deal.getId(), token.getId(), 1, new Callback<Transaction>() {
+
             @Override
-            public void success(Result<Transaction> result) {
+            public void success(Transaction transaction, Response response) {
                 if (!hasView()) return;
+                Timber.d("SUCCESS: %s", transaction);
                 getView().close();
                 Navigator.get(getView()).back(true);
             }
 
             @Override
-            public void failure(TwitterException e) {
+            public void failure(RetrofitError error) {
                 if (!hasView()) return;
+                Timber.d("Error: %s", error.getMessage());
                 getView().showFailure();
             }
         });
