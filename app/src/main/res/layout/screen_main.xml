@@ -16,6 +16,9 @@
             android:id="@+id/screen_main_tablayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@color/light_blue"
+            app:tabSelectedTextColor="@color/light_yellow"
+            app:tabTextColor="@android:color/white"
             app:layout_scrollFlags="scroll|enterAlways"/>
 
     </android.support.design.widget.AppBarLayout>

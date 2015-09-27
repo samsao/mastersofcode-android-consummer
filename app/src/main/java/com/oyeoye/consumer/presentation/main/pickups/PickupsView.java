@@ -1,6 +1,7 @@
 package com.oyeoye.consumer.presentation.main.pickups;
 
 import android.content.Context;
+import android.graphics.Rect;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -45,6 +46,16 @@ public class PickupsView extends PresentedFrameLayout<PickupsPresenter> {
 
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
+        recyclerView.addItemDecoration(new RecyclerView.ItemDecoration() {
+            @Override
+            public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
+                if (parent.getChildAdapterPosition(view) != 0) {
+                    outRect.top = (int) getResources().getDimension(R.dimen.spacing);
+                } else {
+                    super.getItemOffsets(outRect, view, parent, state);
+                }
+            }
+        });
 
         PickupsAdapter adapter = new PickupsAdapter(transactions, new PickupsAdapter.Listener() {
             @Override

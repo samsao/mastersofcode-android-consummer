@@ -16,6 +16,9 @@
         android:id="@+id/screen_deals_recyclerview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:clipToPadding="false"
+        android:padding="@dimen/screen_edge"
+        android:scrollbarStyle="outsideOverlay"
         android:visibility="gone"/>
 
 </FrameLayout>

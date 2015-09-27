@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="AppCardView" parent="AppCardViewBase" >
+        <item name="android:elevation">@dimen/card_elevation</item>
+    </style>
+</resources>

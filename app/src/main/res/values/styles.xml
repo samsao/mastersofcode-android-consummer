@@ -6,8 +6,9 @@
         <item name="windowActionBar">false</item>
         <item name="colorPrimary">@color/light_blue</item>
         <item name="colorPrimaryDark">@color/dark_blue</item>
-        <item name="colorAccent">@color/dark_yellow</item>
-        <item name="colorControlHighlight">@color/light_yellow</item>
+        <item name="colorAccent">@color/light_yellow</item>
+        <item name="colorControlHighlight">@color/light_gray</item>
+        <item name="android:windowBackground">@android:color/white</item>
     </style>
 
     <style name="ToolbarStyle">
@@ -19,8 +20,18 @@
     </style>
 
     <style name="ToolbarTextStyle">
-        <item name="android:textColor">@android:color/black</item>
+        <item name="android:textColor">@android:color/white</item>
         <item name="android:textSize">@dimen/font_size_large</item>
+    </style>
+
+    <style name="AppCardView" parent="AppCardViewBase" />
+
+    <style name="AppCardViewBase">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">@android:color/white</item>
+        <item name="cardCornerRadius">@dimen/corner_radius</item>
+        <item name="cardElevation">@dimen/card_elevation</item>
     </style>
 
 </resources>
